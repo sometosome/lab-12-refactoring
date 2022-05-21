@@ -29,6 +29,8 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 # commented out to increase the build speed.
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
+hunter_add_package(Boost COMPONENTS program_options)
+find_package(Boost CONFIG REQUIRED program_options)
 
 add_library(${PROJECT_NAME} STATIC
   # enum your files and delete this comment
@@ -36,6 +38,7 @@ add_library(${PROJECT_NAME} STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/PageContainer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/StatSender.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/UsedMemory.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/Parser.cpp
 )
 
 add_executable(demo
@@ -48,6 +51,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(demo ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} Boost::program_options)
 
 if(BUILD_TESTS)
   add_executable(tests

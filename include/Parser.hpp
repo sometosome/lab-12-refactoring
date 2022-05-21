@@ -3,8 +3,13 @@
 
 #include <Source.hpp>
 
-struct Arguments {
+using boost::program_options::options_description;
+using boost::program_options::value;
+using boost::program_options::variables_map;
 
+struct Arguments {
+  std::string filename;
+  float threshold;
 };
 
 Arguments parse_arguments(int argc, char* argv[]);

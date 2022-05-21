@@ -4,20 +4,13 @@
 int main(int argc, char* argv[]) {
   Log the_log(LOG_DISABLE);
   UsedMemory used_memory(the_log);
-  std::string filename("data.txt");
-  float threshold(0.1);
+  Arguments arguments = parse_arguments(argc, argv);;
 
-  for (int i = 1; i < argc; ++i)
-  {
-    if ((std::string(argv[i]) == "--input") || (std::string(argv[i]) == "-i"))
-    {
-      filename = argv[i + 1];
-    }
-  }
+  std::cout << arguments.filename << " " << arguments.threshold << "\n";
 
   PageContainer page(the_log, &used_memory);
-  std::ifstream in(filename);
-  page.Load(in, threshold);
+  std::ifstream in(arguments.filename);
+  page.Load(in, arguments.threshold);
 
   the_log.Write(std::to_string(used_memory.get_used()));
 
@@ -29,7 +22,7 @@ int main(int argc, char* argv[]) {
     std::cout << item2.name << ": " << item2.score << std::endl;
   }
 
-  page.Reload(threshold);
+  page.Reload(arguments.threshold);
   the_log.Write(std::to_string(used_memory.get_used()));
 
   return 0;
