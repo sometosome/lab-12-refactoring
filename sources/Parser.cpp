@@ -3,6 +3,8 @@
 Arguments parse_arguments(int argc, char* argv[]) {
   std::string filename;
   float threshold;
+  variables_map vm;
+
   options_description desc("Allowed options");
   desc.add_options()
       ("help", "printing help information")
@@ -10,13 +12,12 @@ Arguments parse_arguments(int argc, char* argv[]) {
        "add file_name")
       ("threshold",value<float>(&threshold)->
           default_value(0.1), "add threshold");
-  variables_map vm;
   store(parse_command_line(argc, argv, desc), vm);
   notify(vm);
-  if (vm.count("help")) {
+  if (vm.count("help"))
+  {
     std::cout << desc << "\n";
     exit(0);
   }
-  Arguments arguments = {filename, threshold};
-  return arguments;
+  return { filename, threshold };
 }

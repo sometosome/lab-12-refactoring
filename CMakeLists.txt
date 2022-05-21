@@ -39,6 +39,7 @@ add_library(${PROJECT_NAME} STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/StatSender.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/UsedMemory.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/Parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/Histogram.cpp
 )
 
 add_executable(demo

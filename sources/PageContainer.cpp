@@ -1,13 +1,19 @@
 #include <PageContainer.hpp>
 
-PageContainer::PageContainer() : wasLogCreated(true), wasMemoryCounterCreated(true) {
+PageContainer::PageContainer() : Histogram(),
+                                 wasLogCreated(true),
+                                 wasMemoryCounterCreated(true) {
   this->log_ = new Log;
   this->memory_counter_ = new UsedMemory;
 }
 
-PageContainer::PageContainer(const Log& log, UsedMemory* memory_counter)
-    : wasLogCreated(false), wasMemoryCounterCreated(false),
-      log_(&log), memory_counter_(memory_counter), stat_sender_(*log_) {}
+PageContainer::PageContainer(const Log& log, UsedMemory* memory_counter) :
+                             Histogram(),
+                             wasLogCreated(false),
+                             wasMemoryCounterCreated(false),
+                             log_(&log),
+                             memory_counter_(memory_counter),
+                             stat_sender_(*log_) {}
 
 PageContainer::~PageContainer() {
   if ((this->wasLogCreated) && (this->log_))
@@ -20,8 +26,10 @@ PageContainer::~PageContainer() {
   }
 }
 
-//TODO: Maybe change treshold
+//TODO: Maybe change threshold
 void PageContainer::Load(std::istream& io, float threshold) {
+  size_t counter = 0;
+  bool flag = true;
   std::vector<std::string> raw_data;
   std::vector<Item> data;
   std::set<std::string> ids;
@@ -55,11 +63,62 @@ void PageContainer::Load(std::istream& io, float threshold) {
 
     if (item.score > threshold)
     {
+      Histogram::add_score(item.score);
       data.push_back(std::move(item));
     } else
     {
+      Histogram::add_thresholdLoad(flag, counter);
+      if (flag)
+      {
+        flag = false;
+      }
       this->stat_sender_.Skip(item);
     }
+    ++counter;
+  }
+
+  if (data.size() < K_MIN_LINES)
+  {
+    throw std::runtime_error("oops");
+  }
+
+  this->memory_counter_->OnDataLoad(this->data_, data);
+  this->stat_sender_.OnLoaded(data);
+  this->data_ = std::move(data);
+}
+
+void PageContainer::Reload(const float& threshold) {
+  size_t counter = 0;
+  bool flag = true;
+  std::vector<Item> data;
+  std::set<std::string> ids;
+
+  for (const auto& line : this->raw_data_)
+  {
+    std::stringstream stream(line);
+
+    Item item;
+    stream >> item.id >> item.name >> item.score;
+
+    if (auto&& [_, inserted] = ids.insert(item.id); !inserted)
+    {
+      throw std::runtime_error("already seen");
+    }
+
+    if (item.score > threshold)
+    {
+      Histogram::add_score(item.score);
+      data.push_back(std::move(item));
+    } else
+    {
+      Histogram::add_thresholdReLoad(flag, counter);
+      if (flag)
+      {
+        flag = false;
+      }
+      this->stat_sender_.Skip(item);
+    }
+    ++counter;
   }
 
   if (data.size() < K_MIN_LINES)
@@ -84,35 +143,4 @@ const Item& PageContainer::ById(const std::string& id) const {
       { return id == i.id; }
       );
   return *it;
-}
-
-void PageContainer::Reload(const float& threshold) {
-  std::vector<Item> data;
-  std::set<std::string> ids;
-
-  for (const auto& line : this->raw_data_)
-  {
-    std::stringstream stream(line);
-
-    Item item;
-    stream >> item.id >> item.name >> item.score;
-
-    if (auto&& [_, inserted] = ids.insert(item.id); !inserted) {
-      throw std::runtime_error("already seen");
-    }
-
-    if (item.score > threshold) {
-      data.push_back(std::move(item));
-    } else {
-      this->stat_sender_.Skip(item);
-    }
-  }
-
-  if (data.size() < K_MIN_LINES) {
-    throw std::runtime_error("oops");
-  }
-
-  this->memory_counter_->OnDataLoad(this->data_, data);
-  this->stat_sender_.OnLoaded(data);
-  this->data_ = std::move(data);
 }
