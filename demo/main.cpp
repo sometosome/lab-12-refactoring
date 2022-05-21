@@ -2,7 +2,7 @@
 #include <Parser.hpp>
 
 int main(int argc, char* argv[]) {
-  Log the_log(LOG_DISABLE);
+  Log the_log(LOG_ENABLE);
   UsedMemory used_memory(the_log);
   Arguments arguments = parse_arguments(argc, argv);;
 

@@ -2,7 +2,9 @@
 
 PageContainer::PageContainer() : Histogram(),
                                  wasLogCreated(true),
-                                 wasMemoryCounterCreated(true) {
+                                 wasMemoryCounterCreated(true),
+                                 reloadNum(0),
+                                 loadNum(0) {
   this->log_ = new Log;
   this->memory_counter_ = new UsedMemory;
 }
@@ -13,7 +15,9 @@ PageContainer::PageContainer(const Log& log, UsedMemory* memory_counter) :
                              wasMemoryCounterCreated(false),
                              log_(&log),
                              memory_counter_(memory_counter),
-                             stat_sender_(*log_) {}
+                             stat_sender_(*log_),
+                             reloadNum(0),
+                             loadNum(0) {}
 
 PageContainer::~PageContainer() {
   if ((this->wasLogCreated) && (this->log_))
@@ -28,7 +32,6 @@ PageContainer::~PageContainer() {
 
 //TODO: Maybe change threshold
 void PageContainer::Load(std::istream& io, float threshold) {
-  size_t counter = 0;
   bool flag = true;
   std::vector<std::string> raw_data;
   std::vector<Item> data;
@@ -67,14 +70,13 @@ void PageContainer::Load(std::istream& io, float threshold) {
       data.push_back(std::move(item));
     } else
     {
-      Histogram::add_thresholdLoad(flag, counter);
+      Histogram::add_thresholdLoad(flag, this->loadNum);
       if (flag)
       {
         flag = false;
       }
       this->stat_sender_.Skip(item);
     }
-    ++counter;
   }
 
   if (data.size() < K_MIN_LINES)
@@ -82,13 +84,14 @@ void PageContainer::Load(std::istream& io, float threshold) {
     throw std::runtime_error("oops");
   }
 
+  ++this->loadNum;
+
   this->memory_counter_->OnDataLoad(this->data_, data);
   this->stat_sender_.OnLoaded(data);
   this->data_ = std::move(data);
 }
 
 void PageContainer::Reload(const float& threshold) {
-  size_t counter = 0;
   bool flag = true;
   std::vector<Item> data;
   std::set<std::string> ids;
@@ -111,20 +114,21 @@ void PageContainer::Reload(const float& threshold) {
       data.push_back(std::move(item));
     } else
     {
-      Histogram::add_thresholdReLoad(flag, counter);
+      Histogram::add_thresholdReLoad(flag, this->reloadNum);
       if (flag)
       {
         flag = false;
       }
       this->stat_sender_.Skip(item);
     }
-    ++counter;
   }
 
   if (data.size() < K_MIN_LINES)
   {
     throw std::runtime_error("oops");
   }
+
+  ++this->reloadNum;
 
   this->memory_counter_->OnDataLoad(this->data_, data);
   this->stat_sender_.OnLoaded(data);

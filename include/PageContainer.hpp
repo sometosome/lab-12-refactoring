@@ -27,6 +27,8 @@ class PageContainer : public Histogram {
   StatSender stat_sender_;
   std::vector<Item> data_;
   std::vector<std::string> raw_data_;
+  size_t reloadNum;
+  size_t loadNum;
 };
 
 #endif // !PAGE_CONTAINER_HPP_
