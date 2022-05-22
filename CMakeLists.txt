@@ -58,7 +58,7 @@ if(BUILD_TESTS)
   add_executable(tests
           ${CMAKE_CURRENT_SOURCE_DIR}/tests/tests.cpp
           tests/MockStatSender.h)
-  target_link_libraries(tests ${PROJECT_NAME} GTest::gtest_main)
+  target_link_libraries(tests ${PROJECT_NAME} GTest::gmock_main GTest::gtest_main)
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
 endif()

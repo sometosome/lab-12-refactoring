@@ -8,6 +8,7 @@
 #include <gmock/gmock.h>
 #include <StatSender.hpp>
 
+
 class MockStatSender : public StatSender {
  public:
   MOCK_METHOD(void, AsyncSend, (const std::vector<Item>&, const std::string_view&));

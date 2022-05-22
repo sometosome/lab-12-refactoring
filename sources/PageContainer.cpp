@@ -37,11 +37,16 @@ void PageContainer::Load(std::istream& io, float threshold) {
   std::vector<Item> data;
   std::set<std::string> ids;
 
-  while (!io.eof())
-  {
-    std::string line;
-    std::getline(io, line, '\n');
-    raw_data.push_back(std::move(line));
+  std::string firstLine;
+  std::getline(io, firstLine, '\n');
+  if (firstLine.empty()){
+    throw std::runtime_error("empty line");
+  }else {
+    while (!io.eof()) {
+      std::string line;
+      std::getline(io, line, '\n');
+      raw_data.push_back(std::move(line));
+    }
   }
 
   if (raw_data.size() < K_MIN_LINES)

@@ -9,12 +9,13 @@ class StatSender {
   const Log* log_;
   std::ofstream out_{"network", std::ios::binary};
 
-  void AsyncSend(const std::vector<Item>& items, const std::string_view& path);
+ protected:
+ virtual void AsyncSend(const std::vector<Item>& items, const std::string_view& path);
 
  public:
   StatSender();
   explicit StatSender(const Log& log);
-  ~StatSender();
+  virtual ~StatSender();
 
   void OnLoaded(const std::vector<Item>& new_items);
   void Skip(const Item& item);
