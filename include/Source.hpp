@@ -13,4 +13,4 @@
 #include <sstream>
 #include <boost/program_options.hpp>
 
-#endif // INCLUDE_SOURCE_HPP
+#endif // INCLUDE_SOURCE_HPP_
