@@ -148,3 +148,7 @@ const Item& PageContainer::ById(const std::string& id) const {
       );
   return *it;
 }
+
+size_t PageContainer::DataSize() const {
+  return  data_.size();
+}

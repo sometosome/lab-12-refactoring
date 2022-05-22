@@ -19,6 +19,8 @@ class PageContainer : public Histogram {
   const Item& ByIndex(const size_t& i) const;
   const Item& ById(const std::string& id) const;
 
+  size_t DataSize() const;
+
  private:
   bool wasLogCreated;
   bool wasMemoryCounterCreated;
