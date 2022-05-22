@@ -1,5 +1,7 @@
-#ifndef SOURCE_HPP_
-#define SOURCE_HPP_
+// Copyright 2021 Your Name <your_email>
+
+#ifndef INCLUDE_SOURCE_HPP_
+#define INCLUDE_SOURCE_HPP_
 
 #include <iostream>
 #include <string>

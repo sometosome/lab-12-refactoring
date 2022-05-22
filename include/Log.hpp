@@ -1,9 +1,10 @@
 // Copyright 2021 Your Name <your_email>
 
-#ifndef INCLUDE_EXAMPLE_HPP_
-#define INCLUDE_EXAMPLE_HPP_
+#ifndef INCLUDE_LOG_HPP_
+#define INCLUDE_LOG_HPP_
 
 #include <Source.hpp>
+#include <string>
 
 #define LOG_ENABLE    0x10000000
 #define LOG_DISABLE   0x00000000

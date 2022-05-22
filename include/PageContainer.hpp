@@ -1,9 +1,13 @@
-#ifndef PAGE_CONTAINER_HPP_
-#define PAGE_CONTAINER_HPP_
+// Copyright 2021 Your Name <your_email>
+
+#ifndef INCLUDE_PAGECONTAINER_HPP_
+#define INCLUDE_PAGECONTAINER_HPP_
 
 #include <UsedMemory.hpp>
 #include <StatSender.hpp>
 #include <Histogram.hpp>
+#include <string>
+#include <vector>
 
 #define K_MIN_LINES  10
 

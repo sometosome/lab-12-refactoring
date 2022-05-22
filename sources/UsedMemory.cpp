@@ -1,10 +1,13 @@
+// Copyright 2021 Your Name <your_email>
+
 #include <UsedMemory.hpp>
 
 UsedMemory::UsedMemory() : wasLogCreated(true), used_(0) {
   this->log_ = new Log;
 }
 
-UsedMemory::UsedMemory(const Log& log) : wasLogCreated(false), log_(&log), used_(0) {}
+UsedMemory::UsedMemory(const Log& log) : wasLogCreated(false),
+                                         log_(&log), used_(0) {}
 
 UsedMemory::~UsedMemory() {
   if ((this->wasLogCreated) && (this->log_))
@@ -31,7 +34,8 @@ void UsedMemory::OnDataLoad(const std::vector<Item>& old_items,
     this->used_ += sizeof(item.score);
   }
 
-  this->log_->Write("UsedMemory::OnDataLoad: new size = " + std::to_string(used_));
+  this->log_->Write("UsedMemory::OnDataLoad: new size = " +
+                    std::to_string(used_));
 }
 
 void UsedMemory::OnRawDataLoad(const std::vector<std::string>& old_items,
@@ -47,7 +51,8 @@ void UsedMemory::OnRawDataLoad(const std::vector<std::string>& old_items,
     this->used_ += item.capacity();
   }
 
-  this->log_->Write("UsedMemory::OnDataLoad: new size = " + std::to_string(this->used_));
+  this->log_->Write("UsedMemory::OnDataLoad: new size = " +
+                    std::to_string(this->used_));
 }
 
 size_t UsedMemory::get_used() const {

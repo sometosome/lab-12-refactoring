@@ -1,3 +1,5 @@
+// Copyright 2021 Your Name <your_email>
+
 #include <PageContainer.hpp>
 
 PageContainer::PageContainer() : Histogram(),
@@ -30,7 +32,6 @@ PageContainer::~PageContainer() {
   }
 }
 
-//TODO: Maybe change threshold
 void PageContainer::Load(std::istream& io, float threshold) {
   bool flag = true;
   std::vector<std::string> raw_data;
@@ -73,8 +74,7 @@ void PageContainer::Load(std::istream& io, float threshold) {
     {
       Histogram::add_score(item.score);
       data.push_back(std::move(item));
-    } else
-    {
+    } else{
       Histogram::add_thresholdLoad(flag, this->loadNum);
       if (flag)
       {
@@ -117,8 +117,7 @@ void PageContainer::Reload(const float& threshold) {
     {
       Histogram::add_score(item.score);
       data.push_back(std::move(item));
-    } else
-    {
+    } else{
       Histogram::add_thresholdReLoad(flag, this->reloadNum);
       if (flag)
       {
@@ -145,12 +144,11 @@ const Item& PageContainer::ByIndex(const size_t& i) const {
 }
 
 const Item& PageContainer::ById(const std::string& id) const {
-  auto it = std::find_if (
+  auto it = std::find_if(
       std::begin(this->data_),
       std::end(this->data_),
       [&id](const auto& i)
-      { return id == i.id; }
-      );
+      { return id == i.id; });
   return *it;
 }
 

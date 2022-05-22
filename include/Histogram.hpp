@@ -1,7 +1,10 @@
-#ifndef HISTOGRAM_HPP_
-#define HISTOGRAM_HPP_
+// Copyright 2021 Your Name <your_email>
+
+#ifndef INCLUDE_HISTOGRAM_HPP_
+#define INCLUDE_HISTOGRAM_HPP_
 
 #include <Source.hpp>
+#include <vector>
 
 #define NEW_VALUE     true
 

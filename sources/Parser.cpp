@@ -1,3 +1,5 @@
+// Copyright 2021 Your Name <your_email>
+
 #include <Parser.hpp>
 
 Arguments parse_arguments(int argc, char* argv[]) {
@@ -10,7 +12,7 @@ Arguments parse_arguments(int argc, char* argv[]) {
       ("help", "printing help information")
       ("input", value<std::string>(&filename)->default_value("data.txt"),
        "add file_name")
-      ("threshold",value<float>(&threshold)->
+      ("threshold", value<float>(&threshold)->
           default_value(0.1), "add threshold");
   store(parse_command_line(argc, argv, desc), vm);
   notify(vm);

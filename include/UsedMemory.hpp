@@ -1,7 +1,11 @@
-#ifndef USED_MEMORY_HPP_
-#define USED_MEMORY_HPP_
+// Copyright 2021 Your Name <your_email>
+
+#ifndef INCLUDE_USEDMEMORY_HPP_
+#define INCLUDE_USEDMEMORY_HPP_
 
 #include <Log.hpp>
+#include <string>
+#include <vector>
 
 class UsedMemory {
  private:

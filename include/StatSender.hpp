@@ -1,7 +1,10 @@
-#ifndef STAT_SENDER_HPP_
-#define STAT_SENDER_HPP_
+// Copyright 2021 Your Name <your_email>
+
+#ifndef INCLUDE_STATSENDER_HPP_
+#define INCLUDE_STATSENDER_HPP__
 
 #include <Log.hpp>
+#include <vector>
 
 class StatSender {
  private:
@@ -10,7 +13,8 @@ class StatSender {
   std::ofstream out_{"network", std::ios::binary};
 
  protected:
- virtual void AsyncSend(const std::vector<Item>& items, const std::string_view& path);
+ virtual void AsyncSend(const std::vector<Item>& items,
+                         const std::string_view& path);
 
  public:
   StatSender();
