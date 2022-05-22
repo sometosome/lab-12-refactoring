@@ -17,4 +17,4 @@ struct Arguments {
 
 Arguments parse_arguments(int argc, char* argv[]);
 
-#endif // !PARSER_HPP_
+#endif // INCLUDE_PARSER_HPP_

@@ -1,7 +1,7 @@
 // Copyright 2021 Your Name <your_email>
 
 #ifndef INCLUDE_STATSENDER_HPP_
-#define INCLUDE_STATSENDER_HPP__
+#define INCLUDE_STATSENDER_HPP_
 
 #include <Log.hpp>
 #include <vector>
@@ -25,4 +25,4 @@ class StatSender {
   void Skip(const Item& item);
 };
 
-#endif // !STAT_SENDER_HPP_
+#endif // INCLUDE_STATSENDER_HPP_

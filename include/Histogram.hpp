@@ -24,4 +24,4 @@ class Histogram {
   void add_thresholdReLoad(const bool& flag, const size_t& pos);
 };
 
-#endif // !HISTOGRAM_HPP_
+#endif // INCLUDE_HISTOGRAM_HPP_

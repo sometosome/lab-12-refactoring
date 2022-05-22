@@ -37,4 +37,4 @@ class PageContainer : public Histogram {
   size_t loadNum;
 };
 
-#endif // !PAGE_CONTAINER_HPP_
+#endif // INCLUDE_PAGECONTAINER_HPP_

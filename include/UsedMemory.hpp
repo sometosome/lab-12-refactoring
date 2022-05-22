@@ -25,4 +25,4 @@ class UsedMemory {
   [[nodiscard]] size_t get_used() const;
 };
 
-#endif // !USED_MEMORY_HPP_
+#endif // INCLUDE_USEDMEMORY_HPP_

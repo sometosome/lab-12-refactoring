@@ -28,4 +28,4 @@ class Log {
   void WriteDebug(const std::string_view& message) const;
 };
 
-#endif // INCLUDE_EXAMPLE_HPP_
+#endif // INCLUDE_LOG_HPP_
