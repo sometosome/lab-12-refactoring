@@ -12,8 +12,8 @@ class StatSender {
   const Log* log_;
   std::ofstream out_{"network", std::ios::binary};
 
- protected:
- virtual void AsyncSend(const std::vector<Item>& items,
+ public:
+  void AsyncSend(const std::vector<Item>& items,
                          const std::string_view& path);
 
  public:

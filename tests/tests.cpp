@@ -48,18 +48,13 @@ TEST(PageContainer_Test, AsyncSend_Test) {
   srand(time(nullptr));
   std::stringstream ss{};
   prepare_stringstream(ss);
-  MockStatSender mock;
-//  UsedMemory* used = new UsedMemory();
-//  MockStatSender* sender = new MockStatSender();
-  PageContainer page;
-  constexpr std::string_view temp{"/items/loaded"};
-  EXPECT_CALL(mock, AsyncSend(_, temp))
+  UsedMemory* used = new UsedMemory();
+  MockStatSender* sender = new MockStatSender();
+  PageContainer page(sender, used);
+  EXPECT_CALL(*sender, AsyncSend(_, _))
       .Times(1);
-  EXPECT_CALL(mock,
-              AsyncSend(_, std::string_view{"/items/skipped"}))
-      .Times(20);
   page.Load(ss, 0.0);
-  page.Load(ss, 0.0);
+  delete sender;
 }
 
 TEST(PageContainer_Test, AlreadySeen){

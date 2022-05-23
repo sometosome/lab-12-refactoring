@@ -9,6 +9,7 @@ PageContainer::PageContainer() : Histogram(),
                                  loadNum(0) {
   this->log_ = new Log;
   this->memory_counter_ = new UsedMemory;
+  this->stat_sender_ = new StatSender();
 }
 
 PageContainer::PageContainer(const Log& log, UsedMemory* memory_counter) :
@@ -17,9 +18,19 @@ PageContainer::PageContainer(const Log& log, UsedMemory* memory_counter) :
                              wasMemoryCounterCreated(false),
                              log_(&log),
                              memory_counter_(memory_counter),
-                             stat_sender_(*log_),
+                             stat_sender_(new StatSender(log)),
                              reloadNum(0),
                              loadNum(0) {}
+PageContainer::PageContainer(StatSender* sender, UsedMemory* memory_counter):
+                            Histogram(),
+                            wasLogCreated(false),
+                            wasMemoryCounterCreated(false),
+                            memory_counter_(memory_counter),
+                            stat_sender_(sender),
+                            reloadNum(0),
+                            loadNum(0) {
+  this->log_ = new Log;
+}
 
 PageContainer::~PageContainer() {
   if ((this->wasLogCreated) && (this->log_))
@@ -80,7 +91,7 @@ void PageContainer::Load(std::istream& io, float threshold) {
       {
         flag = false;
       }
-      this->stat_sender_.Skip(item);
+      this->stat_sender_->Skip(item);
     }
   }
 
@@ -92,7 +103,7 @@ void PageContainer::Load(std::istream& io, float threshold) {
   ++this->loadNum;
 
   this->memory_counter_->OnDataLoad(this->data_, data);
-  this->stat_sender_.OnLoaded(data);
+  this->stat_sender_->OnLoaded(data);
   this->data_ = std::move(data);
 }
 
@@ -123,7 +134,7 @@ void PageContainer::Reload(const float& threshold) {
       {
         flag = false;
       }
-      this->stat_sender_.Skip(item);
+      this->stat_sender_->Skip(item);
     }
   }
 
@@ -135,7 +146,7 @@ void PageContainer::Reload(const float& threshold) {
   ++this->reloadNum;
 
   this->memory_counter_->OnDataLoad(this->data_, data);
-  this->stat_sender_.OnLoaded(data);
+  this->stat_sender_->OnLoaded(data);
   this->data_ = std::move(data);
 }
 

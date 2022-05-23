@@ -15,7 +15,7 @@ StatSender::~StatSender() {
   }
 }
 
-void StatSender::AsyncSend(
+ void StatSender::AsyncSend(
     const std::vector<Item>& items,
     const std::string_view& path) {
   this->log_->Write(path);

@@ -15,6 +15,7 @@ class PageContainer : public Histogram {
  public:
   PageContainer();
   PageContainer(const Log& log, UsedMemory* memory_counter);
+  PageContainer(StatSender* sender, UsedMemory* memory_counter);
   ~PageContainer();
 
   void Load(std::istream& io, float threshold);
@@ -30,7 +31,7 @@ class PageContainer : public Histogram {
   bool wasMemoryCounterCreated;
   const Log* log_;
   UsedMemory* memory_counter_;
-  StatSender stat_sender_;
+  StatSender* stat_sender_;
   std::vector<Item> data_;
   std::vector<std::string> raw_data_;
   size_t reloadNum;
