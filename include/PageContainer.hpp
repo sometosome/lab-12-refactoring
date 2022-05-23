@@ -29,6 +29,7 @@ class PageContainer : public Histogram {
  private:
   bool wasLogCreated;
   bool wasMemoryCounterCreated;
+  bool wasStatSenderCreated;
   const Log* log_;
   UsedMemory* memory_counter_;
   StatSender* stat_sender_;

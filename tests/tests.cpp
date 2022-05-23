@@ -55,6 +55,7 @@ TEST(PageContainer_Test, AsyncSend_Test) {
       .Times(21);
   page.Load(ss, 0.0);
   delete sender;
+  delete used;
 }
 
 TEST(PageContainer_Test, AlreadySeen){

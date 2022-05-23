@@ -5,17 +5,19 @@
 PageContainer::PageContainer() : Histogram(),
                                  wasLogCreated(true),
                                  wasMemoryCounterCreated(true),
+                                 wasStatSenderCreated(true),
                                  reloadNum(0),
                                  loadNum(0) {
   this->log_ = new Log;
   this->memory_counter_ = new UsedMemory;
-  this->stat_sender_ = new StatSender();
+  this->stat_sender_ = new StatSender;
 }
 
 PageContainer::PageContainer(const Log& log, UsedMemory* memory_counter) :
                              Histogram(),
                              wasLogCreated(false),
                              wasMemoryCounterCreated(false),
+                             wasStatSenderCreated(false),
                              log_(&log),
                              memory_counter_(memory_counter),
                              stat_sender_(new StatSender(log)),
@@ -23,8 +25,9 @@ PageContainer::PageContainer(const Log& log, UsedMemory* memory_counter) :
                              loadNum(0) {}
 PageContainer::PageContainer(StatSender* sender, UsedMemory* memory_counter):
                             Histogram(),
-                            wasLogCreated(false),
+                            wasLogCreated(true),
                             wasMemoryCounterCreated(false),
+                            wasStatSenderCreated(false),
                             memory_counter_(memory_counter),
                             stat_sender_(sender),
                             reloadNum(0),
@@ -40,6 +43,10 @@ PageContainer::~PageContainer() {
   if ((this->wasMemoryCounterCreated) && (this->memory_counter_))
   {
     delete this->memory_counter_;
+  }
+  if ((this->wasStatSenderCreated) && (this->stat_sender_))
+  {
+    delete this->stat_sender_;
   }
 }
 
