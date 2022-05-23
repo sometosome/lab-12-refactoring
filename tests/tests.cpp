@@ -52,7 +52,7 @@ TEST(PageContainer_Test, AsyncSend_Test) {
   MockStatSender* sender = new MockStatSender();
   PageContainer page(sender, used);
   EXPECT_CALL(*sender, AsyncSend(_, _))
-      .Times(1);
+      .Times(21);
   page.Load(ss, 0.0);
   delete sender;
 }

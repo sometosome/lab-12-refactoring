@@ -13,7 +13,7 @@ class StatSender {
   std::ofstream out_{"network", std::ios::binary};
 
  public:
-  void AsyncSend(const std::vector<Item>& items,
+  virtual void AsyncSend(const std::vector<Item>& items,
                          const std::string_view& path);
 
  public:
