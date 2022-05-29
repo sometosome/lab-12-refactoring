@@ -1,4 +1,4 @@
-// Copyright 2021 Your Name <your_email>
+// Copyright 2021 sometosome
 
 #ifndef INCLUDE_HISTOGRAM_HPP_
 #define INCLUDE_HISTOGRAM_HPP_
